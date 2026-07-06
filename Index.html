@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🔥 وبلاگ گربه · مشکی-قرمز</title>
+    <style>
+        /* ===== ریست و فونت ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 20% 20%, #1a0a0a, #000000 80%);
+        }
+        .blog-container {
+            max-width: 950px;
+            width: 100%;
+        }
+
+        /* ===== هدر با تم مشکی-قرمز ===== */
+        .blog-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+            border-bottom: 2px solid #cc1122;
+            margin-bottom: 35px;
+            position: relative;
+        }
+        .blog-header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff2244, transparent);
+        }
+        .blog-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff2244;
+            text-shadow: 0 0 40px #ff224450, 0 0 80px #ff224420;
+            letter-spacing: 1px;
+        }
+        .blog-header h1 span {
+            color: #fff;
+        }
+        .blog-header p {
+            color: #aa8888;
+            font-size: 1.05rem;
+            margin-top: 6px;
+            border-top: 1px solid rgba(255, 34, 68, 0.1);
+            padding-top: 14px;
+            display: inline-block;
+        }
+        .blog-header .emoji-big {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* ===== دکمه‌ی اضافه کردن پست ===== */
+        .add-post-btn {
+            background: linear-gradient(135deg, #cc1122, #aa0a1a);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px auto 25px;
+            display: block;
+            box-shadow: 0 8px 30px rgba(204, 17, 34, 0.3);
+            transition: 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .add-post-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 40px rgba(204, 17, 34, 0.45);
+        }
+
+        /* ===== کارت پست ===== */
+        .post-card {
+            background: rgba(16, 8, 8, 0.7);
+            backdrop-filter: blur(12px) saturate(120%);
+            -webkit-backdrop-filter: blur(12px) saturate(120%);
+            border-radius: 28px;
+            padding: 28px 30px 30px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 34, 68, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 34, 68, 0.02);
+            transition: 0.25s ease;
+        }
+        .post-card:hover {
+            border-color: rgba(255, 34, 68, 0.15);
+            background: rgba(20, 10, 10, 0.7);
+            transform: translateY(-2px);
+        }
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .post-category {
+            background: rgba(204, 17, 34, 0.15);
+            padding: 2px 18px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #ff4466;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 34, 68, 0.1);
+            text-transform: uppercase;
+        }
+        .post-date {
+            color: #885555;
+            font-size: 0.8rem;
+        }
+        .post-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 8px 0 12px;
+            color: #f0e0e0;
+            line-height: 1.2;
+        }
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .post-title a:hover {
+            color: #ff2244;
+        }
+        .post-summary {
+            color: #ccb0b0;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 18px;
+        }
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-top: 1px solid rgba(255, 34, 68, 0.05);
+            padding-top: 16px;
+        }
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .post-tags span {
+            background: rgba(255, 34, 68, 0.05);
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #cc8888;
+            border: 1px solid rgba(255, 34, 68, 0.04);
+        }
+        .read-more {
+            color: #ff4466;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .read-more:hover {
+            border-bottom-color: #ff4466;
+        }
+
+        /* ===== پست ویژه ===== */
+        .post-card.special {
+            border-color: rgba(255, 68, 68, 0.2);
+            background: linear-gradient(145deg, rgba(30, 10, 10, 0.6), rgba(10, 5, 5, 0.6));
+        }
+
+        /* ===== اطلاعات سریع ===== */
+        .sidebar-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 10px 0 30px;
+        }
+        .info-box {
+            background: rgba(16, 8, 8, 0.4);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 16px 14px;
+            border: 1px solid rgba(255, 34, 68, 0.04);
+            text-align: center;
+        }
+        .info-box .num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ff2244;
+        }
+        .info-box .label {
+            color: #885555;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        /* ===== فوتر ===== */
+        .blog-footer {
+            margin-top: 40px;
+            padding: 20px 0 10px;
+            border-top: 1px solid rgba(255, 34, 68, 0.05);
+            text-align: center;
+            color: #553333;
+            font-size: 0.85rem;
+        }
+        .blog-footer span {
+            color: #ff2244;
+        }
+
+        /* ===== مودال ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-box {
+            background: #1a0a0a;
+            border: 1px solid rgba(255, 34, 68, 0.15);
+            border-radius: 32px;
+            padding: 35px 30px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+        }
+        .modal-box h2 {
+            color: #ff2244;
+            margin-bottom: 16px;
+            font-size: 1.6rem;
+        }
+        .modal-box label {
+            display: block;
+            color: #cc9999;
+            font-size: 0.85rem;
+            margin: 12px 0 4px;
+        }
+        .modal-box input,
+        .modal-box textarea,
+        .modal-box select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 34, 68, 0.08);
+            background: rgba(0, 0, 0, 0.4);
+            color: #f0e0e0;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        .modal-box input:focus,
+        .modal-box textarea:focus {
+            border-color: #ff2244;
+            box-shadow: 0 0 30px rgba(255, 34, 68, 0.05);
+        }
+        .modal-box textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .modal-actions button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .btn-save {
+            background: linear-gradient(135deg, #cc1122, #aa0a1a);
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(204, 17, 34, 0.2);
+        }
+        .btn-save:hover {
+            transform: scale(1.02);
+        }
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.04);
+            color: #cc9999;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ===== ریسپانسیو ===== */
+        @media (max-width: 700px) {
+            .sidebar-info {
+                grid-template-columns: 1fr 1fr;
+            }
+            .blog-header h1 {
+                font-size: 2.2rem;
+            }
+            .post-title {
+                font-size: 1.4rem;
+            }
+            .post-card {
+                padding: 20px 18px;
+            }
+        }
+        @media (max-width: 450px) {
+            .sidebar-info {
+                grid-template-columns: 1fr;
+            }
+            .modal-box {
+                padding: 25px 18px;
+            }
+            .blog-header h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blog-container">
+
+        <!-- ===== هدر مشکی-قرمز ===== -->
+        <header class="blog-header">
+            <span class="emoji-big">🔥</span>
+            <h1><span>وبلاگ</span> گربه</h1>
+            <p>✧ خونسردی مشکی · شور قرمز ✧</p>
+        </header>
+
+        <!-- ===== اطلاعات سریع ===== -->
+        <div class="sidebar-info" id="stats">
+            <div class="info-box">
+                <div class="num" id="postCount">۶</div>
+                <div class="label">پست</div>
+            </div>
+            <div class="info-box">
+                <div class="num">🐱</div>
+                <div class="label">نویسنده</div>
+            </div>
+            <div class="info-box">
+                <div class="num">🔥</div>
+                <div class="label">تم مشکی-قرمز</div>
+            </div>
+            <div class="info-box">
+                <div class="num" id="tagCount">۱۲</div>
+                <div class="label">تگ</div>
+            </div>
+        </div>
+
+        <!-- ===== دکمه‌ی اضافه کردن پست ===== -->
+        <button class="add-post-btn" id="showModalBtn">➕ پست جدید اضافه کن</button>
+
+        <!-- ===== لیست پست‌ها ===== -->
+        <div id="postList">
+
+            <!-- پست ۱ -->
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="post-category">🔥 کدنویسی</span>
+                    <span class="post-date">۱۴۰۵/۰۱/۱۵</span>
+                </div>
+                <h2 class="post-title"><a href="#">چطور یه سایت مشکی-قرمز خفن بسازیم؟</a></h2>
+                <p class="post-summary">
+                    ترکیب مشکی و قرمز همیشه حس قدرت و هیجان رو منتقل می‌کنه. توی این پست یاد می‌گیری چطور با چند خط CSS، یه سایت کاملاً مشکی-قرمز طراحی کنی که هرکی ببینه می‌گه وای...
+                </p>
+                <div class="post-footer">
+                    <div class="post-tags"><span>#CSS</span><span>#طراحی</span><span>#مشکی_قرمز</span></div>
+                    <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                </div>
+            </article>
+
+            <!-- پست ۲ -->
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="post-category">🎮 بازی</span>
+                    <span class="post-date">۱۴۰۵/۰۱/۱۲</span>
+                </div>
+                <h2 class="post-title"><a href="#">۵ تا بازی مرورگری که بدون نت کار می‌کنن</a></h2>
+                <p class="post-summary">
+                    اگه نت نداری یا حوصله‌ات سر رفته، این ۵ تا بازی رو توی مرورگرت باز کن و حسابی سرگرم شو. از ماشین‌بازی گرفته تا پازل‌های فکری — همه‌شون رایگان و آفلاین.
+                </p>
+                <div class="post-footer">
+                    <div class="post-tags"><span>#بازی</span><span>#آفلاین</span><span>#مرورگر</span></div>
+                    <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                </div>
+            </article>
+
+            <!-- پست ۳ -->
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="post-category">🤖 هوش مصنوعی</span>
+                    <span class="post-date">۱۴۰۵/۰۱/۰۸</span>
+                </div>
+                <h2 class="post-title"><a href="#">چطور با هوش مصنوعی کد بنویسیم؟</a></h2>
+                <p class="post-summary">
+                    دیگه نیازی نیست همه‌چیز رو از صفر بنویسی. با ابزارهای هوش مصنوعی مثل ChatGPT می‌تونی کدهای آماده، دیباگ، و حتی ایده‌های جدید بگیری. تازه، خود گربه هم ازش استفاده می‌کنه.
+                </p>
+                <div class="post-footer">
+                    <div class="post-tags"><span>#AI</span><span>#کدنویسی</span><span>#ChatGPT</span></div>
+                    <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                </div>
+            </article>
+
+            <!-- پست ۴ -->
+            <article class="post-card special">
+                <div class="post-meta">
+                    <span class="post-category">🕶️ سبک زندگی</span>
+                    <span class="post-date">۱۴۰۵/۰۱/۰۵</span>
+                </div>
+                <h2 class="post-title"><a href="#">۱۰ تا عادت کوچک که زندگیت رو متحول می‌کنه</a></h2>
+                <p class="post-summary">
+                    گاهی یه تغییر کوچیک توی روزمره، دنیای قشنگی می‌سازه. از نوشتن یه خط کد تا خوندن یه صفحه کتاب — این ۱۰ تا عادت رو امتحان کن و ببین چقدر فرق می‌کنه.
+                </p>
+                <div class="post-footer">
+                    <div class="post-tags"><span>#زندگی</span><span>#عادت</span><span>#موفقیت</span></div>
+                    <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                </div>
+            </article>
+
+            <!-- پست ۵ -->
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="post-category">💻 تکنولوژی</span>
+                    <span class="post-date">۱۴۰۵/۰۱/۰۲</span>
+                </div>
+                <h2 class="post-title"><a href="#">آینده‌ی وب: بدون سرور، بدون دامنه</a></h2>
+                <p class="post-summary">
+                    با پیشرفت تکنولوژی، دیگه نیازی به سرور و دامنه برای داشتن یه وب‌سایت نیست. کافیه یه فایل HTML توی گوشیت داشته باشی و به همه نشون بدی که چقدر می‌تونی خفن باشی.
+                </p>
+                <div class="post-footer">
+                    <div class="post-tags"><span>#وب</span><span>#آینده</span><span>#بدون_سرور</span></div>
+                    <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                </div>
+            </article>
+
+            <!-- پست ۶ -->
+            <article class="post-card">
+                <div class="post-meta">
+                    <span class="post-category">😺 گربه</span>
+                    <span class="post-date">۱۴۰۴/۱۲/۲۸</span>
+                </div>
+                <h2 class="post-title"><a href="#">چرا گربه‌ها از کیبورد متنفرن؟ (و عاشقش!)</a></h2>
+                <p class="post-summary">
+                    یه تحقیق غیرعلمی نشون داده که گربه‌ها عاشق کیبوردن، چون می‌دونن که اونجا جای کدهای خفنه. ولی وقتی می‌خوابن روش، یعنی دارن بهت پیام می‌دن که استراحت کن!
+                </p>
+                <div class="post-footer">
+                    <div class="post-tags"><span>#گربه</span><span>#کیبورد</span><span>#طنز</span></div>
+                    <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- ===== فوتر ===== -->
+        <footer class="blog-footer">
+            © ۲۰۲۶ — وبلاگ گربه · تم <span>مشکی-قرمز</span> · ساخته شده با ❤️ و کد
+        </footer>
+
+    </div>
+
+    <!-- ===== مودال ===== -->
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <h2>➕ پست جدید</h2>
+            <label>عنوان</label>
+            <input type="text" id="postTitle" placeholder="یه عنوان باحال..." />
+            <label>خلاصه</label>
+            <textarea id="postSummary" placeholder="چند خط درباره‌ی پستت بنویس..."></textarea>
+            <label>دسته‌بندی</label>
+            <select id="postCategory">
+                <option value="🔥 کدنویسی">🔥 کدنویسی</option>
+                <option value="🎮 بازی">🎮 بازی</option>
+                <option value="🤖 هوش مصنوعی">🤖 هوش مصنوعی</option>
+                <option value="🕶️ سبک زندگی">🕶️ سبک زندگی</option>
+                <option value="💻 تکنولوژی">💻 تکنولوژی</option>
+                <option value="😺 گربه">😺 گربه</option>
+                <option value="🎨 طراحی">🎨 طراحی</option>
+                <option value="📚 کتاب">📚 کتاب</option>
+            </select>
+            <label>تگ‌ها (با کاما جدا کن)</label>
+            <input type="text" id="postTags" placeholder="مثلاً: #HTML, #CSS, #باحال" />
+            <div class="modal-actions">
+                <button class="btn-save" id="savePostBtn">✅ ذخیره</button>
+                <button class="btn-cancel" id="closeModalBtn">لغو</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ===== عناصر =====
+            const modal = document.getElementById('modal');
+            const showBtn = document.getElementById('showModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const saveBtn = document.getElementById('savePostBtn');
+            const postList = document.getElementById('postList');
+            const postCountEl = document.getElementById('postCount');
+            const tagCountEl = document.getElementById('tagCount');
+
+            // ===== باز و بسته کردن مودال =====
+            function openModal() { modal.classList.add('show'); }
+            showBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) modal.classList.remove('show');
+            });
+
+            // ===== ذخیره پست جدید =====
+            saveBtn.addEventListener('click', function() {
+                const title = document.getElementById('postTitle').value.trim();
+                const summary = document.getElementById('postSummary').value.trim();
+                const category = document.getElementById('postCategory').value;
+                const tagsRaw = document.getElementById('postTags').value.trim();
+
+                if (!title || !summary) {
+                    alert('❌ لطفاً عنوان و خلاصه رو پر کن!');
+                    return;
+                }
+
+                const now = new Date();
+                const dateStr =
+                `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+
+                const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(t => t) : ['#جدید'];
+                const tagsHtml = tags.map(t => `<span>${t}</span>`).join('');
+
+                const newPost = document.createElement('article');
+                newPost.className = 'post-card special';
+                newPost.innerHTML = `
+                    <div class="post-meta">
+                        <span class="post-category">${category}</span>
+                        <span class="post-date">${dateStr}</span>
+                    </div>
+                    <h2 class="post-title"><a href="#">${title}</a></h2>
+                    <p class="post-summary">${summary}</p>
+                    <div class="post-footer">
+                        <div class="post-tags">${tagsHtml}</div>
+                        <a href="#" class="read-more" onclick="alert('📖 ادامه مطلب...'); return false;">ادامه مطلب ←</a>
+                    </div>
+                `;
+
+                postList.insertBefore(newPost, postList.firstChild);
+                updateStats();
+
+                modal.classList.remove('show');
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postSummary').value = '';
+                document.getElementById('postTags').value = '';
+
+                alert('✅ پست جدید با موفقیت اضافه شد!');
+            });
+
+            // ===== به‌روزرسانی آمار =====
+            function updateStats() {
+                const posts = document.querySelectorAll('.post-card');
+                postCountEl.textContent = posts.length;
+
+                let tagSet = new Set();
+                posts.forEach(post => {
+                    const tags = post.querySelectorAll('.post-tags span');
+                    tags.forEach(t => tagSet.add(t.textContent.trim()));
+                });
+                tagCountEl.textContent = tagSet.size;
+            }
+
+            // ===== راحتی با Enter =====
+            document.getElementById('postTitle').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    document.getElementById('postSummary').focus();
+                }
+            });
+            document.getElementById('postSummary').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    e.preventDefault();
+                    saveBtn.click();
+                }
+            });
+
+            // ===== آمار اولیه =====
+            updateStats();
+
+            console.log('🔥 وبلاگ مشکی-قرمز آماده‌ست! پست جدید اضافه کن.');
+        })();
+    </script>
+
+</body>
+</html>
